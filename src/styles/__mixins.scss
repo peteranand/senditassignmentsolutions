@@ -1,0 +1,9 @@
+@mixin input-container-style {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  & > span {
+    flex: 0 1 auto;
+  }
+}

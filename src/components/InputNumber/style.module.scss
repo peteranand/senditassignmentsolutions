@@ -1,0 +1,9 @@
+@import '../../styles/_mixins';
+
+.inputNumberContainer {
+  @include input-container-style;
+
+  & > div {
+    flex: 1 1 auto;
+  }
+}

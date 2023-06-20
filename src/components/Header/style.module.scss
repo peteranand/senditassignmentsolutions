@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  & .logo {
+    flex: 1 1;
+  }
+}

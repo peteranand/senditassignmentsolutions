@@ -1,7 +1,8 @@
-import { InputNumber } from '../InputNumber';
-import { Input } from '../Input';
-import { SelectBox } from '../SelectBox';
-import cn from './style.module.scss';
+import {Button} from '../Button/Button';
+import {Input} from '../Input';
+import {SelectBox} from '../SelectBox';
+
+import cn from './InputForm.style.module.scss';
 
 export function InputForm(): JSX.Element {
   const PROMPT = 'Choose a service';
@@ -17,10 +18,10 @@ export function InputForm(): JSX.Element {
   ];
   return (
     <div className={cn.inputContainer}>
-      <SelectBox prompt={'Choose a service'} options={OPTIONS} />
-      <InputNumber prompt="No of Pages that are needed" />
-      <Input prompt="Academic Level" />
-      <Input prompt="Subject something of assignment topic" />
+      <SelectBox prompt={PROMPT} options={OPTIONS} />
+      <Input prompt='Input 1' />
+      <Input prompt='Input 2' />
+      <Button>Upload</Button>
     </div>
   );
 }

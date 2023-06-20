@@ -1,2 +1,2 @@
-export { InputNumber } from './Input';
-export type { InputNumberProps } from './Input';
+export type {InputNumberProps} from './InputNumber.interface';
+export {InputNumber} from './InputNumber';

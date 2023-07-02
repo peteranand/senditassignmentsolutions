@@ -1,0 +1,18 @@
+.form-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .select-block {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    & > * {
+      flex: 1 1 auto;
+    }
+  }
+  .submit-button {
+    margin-top: 1rem;
+    background-color: #f43f5e;
+  }
+}

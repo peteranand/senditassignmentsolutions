@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  width: 100dvw;
+  box-sizing: border-box;
+  padding: 1.25rem 4rem;
+  position: absolute;
+  align-items: center;
+  top: 0;
+  .header-nav-container {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1 1 auto;
+    gap: 2rem;
+    & > a {
+      cursor: pointer;
+      color: #18181b;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

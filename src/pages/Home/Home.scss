@@ -1,0 +1,12 @@
+.home-content {
+  padding: 5rem 10rem;
+  gap: 5rem;
+  display: flex;
+  flex-direction: row;
+  height: 100dvh;
+  box-sizing: border-box;
+  & > *:first-child,
+  & > *:nth-child(2) {
+    flex: 1 1 100%;
+  }
+}

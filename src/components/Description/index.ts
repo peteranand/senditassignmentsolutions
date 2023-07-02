@@ -1,1 +1,0 @@
-export { Desctription } from './Description';

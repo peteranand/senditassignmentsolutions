@@ -1,29 +1,9 @@
-import { Select, SelectProps } from 'antd';
+import {Select} from 'antd';
+import {SelectBoxProps} from './SelectBox.interface';
 
-import cn from './style.module.scss';
+import cn from './SelectBox.module.scss';
 
-export interface SelectBoxProps extends SelectProps {
-  /**
-   * Prompt to be diplayed with select box
-   */
-  prompt: string;
-}
-
-export function SelectBox({
-  prompt,
-  placeholder,
-  options,
-}: SelectBoxProps): JSX.Element {
-  const className = cn.selectBox;
-
-  return (
-    <div className={cn.selectContainer}>
-      <span>{prompt}</span>
-      <Select
-        className={className}
-        placeholder={placeholder}
-        options={options}
-      />
-    </div>
-  );
+export function SelectBox({className, ...props}: SelectBoxProps): JSX.Element {
+  const selectBoxClassName = `${cn.selectBox} ${className} `;
+  return <Select className={selectBoxClassName} {...props} />;
 }

@@ -3,7 +3,7 @@ import {getDownloadURL, listAll, ref, uploadBytes} from 'firebase/storage';
 import {collection, getDocs, addDoc} from 'firebase/firestore';
 import {DOCUMENTS_DEFAULT_PATH as PATH} from '../constants/firebase.storage';
 
-export async function uploadDocument(document: any, fileName: string) {
+export async function uploadFile(document: any, fileName: string) {
   try {
     const url: string = `${PATH}${fileName}`;
     const storageRef = ref(storage, url);
@@ -14,7 +14,9 @@ export async function uploadDocument(document: any, fileName: string) {
   }
 }
 
-export async function getDocumentURLs(jobId: string) {
+export async function getUploadedFileURLs(
+  jobId: string
+): Promise<Array<string> | undefined> {
   try {
     const url: string = `${PATH}${jobId}`;
     const storageRef = ref(storage, url);
@@ -24,6 +26,7 @@ export async function getDocumentURLs(jobId: string) {
       const downloadURL = await getDownloadURL(item);
       urlList.push(downloadURL);
     });
+    return urlList;
   } catch (e) {
     console.error(e);
   }

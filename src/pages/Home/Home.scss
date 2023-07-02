@@ -1,12 +1,24 @@
 .home-content {
-  padding: 5rem 10rem;
+  padding: 5rem 10vw;
   gap: 5rem;
   display: flex;
   flex-direction: row;
   height: 100dvh;
+  justify-content: center;
   box-sizing: border-box;
   & > *:first-child,
   & > *:nth-child(2) {
     flex: 1 1 100%;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px) {
+  .home-content {
+    flex-direction: column;
+    height: auto;
+    & > *:first-child,
+    & > *:nth-child(2) {
+      width: auto;
+    }
   }
 }

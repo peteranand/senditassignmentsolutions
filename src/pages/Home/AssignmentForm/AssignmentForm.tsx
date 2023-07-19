@@ -3,9 +3,11 @@ import {Rule} from 'antd/es/form';
 import {Button} from '../../../components/Button/Button';
 import {Form, FormItem} from '../../../components/Form';
 import {Input} from '../../../components/Input';
+import {InputNumber} from '../../../components/InputNumber';
 import {SelectBox} from '../../../components/SelectBox';
 import {TextArea} from '../../../components/TextArea';
 import {UploadFiles} from '../../../components/UploadFile/UploadFile';
+import {addAssignment} from '../../../services/assignment';
 
 import './AssignmentForm.scss';
 
@@ -23,19 +25,32 @@ export function AssignmentForm(): JSX.Element {
 
   const commonRules: Rule[] = [{required: true}];
 
+  const onFinish = async (values: any) => {
+    const {upload, ...documentData} = values;
+    if (documentData?.description === undefined) documentData.description = '';
+    const result = await addAssignment(documentData);
+    console.log({values, result});
+  };
+
   return (
-    <Form className='form-container' layout='vertical'>
+    <Form className='form-container' layout='vertical' onFinish={onFinish}>
       <FormItem label='Name' name='name' rules={[...commonRules]}>
         <Input placeholder='example' />
       </FormItem>
-      <FormItem label='Email' name='email' rules={[...commonRules]}>
+      <FormItem
+        label='Email'
+        name='email'
+        rules={[
+          ...commonRules,
+          {type: 'email', message: 'Input is not a valid E-mail'},
+        ]}>
         <Input placeholder='you@company.com' />
       </FormItem>
       <FormItem
         label='Phone Number'
         name='phoneNumber'
         rules={[...commonRules]}>
-        <Input placeholder='+91 00000-00000' />
+        <Input placeholder='+91 00000-00000' maxLength={10} />
       </FormItem>
       <div className='select-block'>
         <FormItem

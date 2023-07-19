@@ -1,0 +1,17 @@
+.login-wrapper {
+  height: 100vh;
+//   display: flex;
+//   justify-content: center;
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    padding-top: 30vh;
+    align-items: center;
+    & input {
+      margin-left: auto;
+      margin-right: auto;
+      width: 30vw;
+    }
+  }
+}

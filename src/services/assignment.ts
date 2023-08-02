@@ -1,4 +1,4 @@
-import {UploadFileType} from '../components/UploadFile/UploadFile';
+import {UploadFileType} from '../components/UploadFile';
 import {AssignmentData} from '../types/asssignments';
 import {addDocument, getAllDocuments, uploadFile} from './firebase';
 
@@ -36,14 +36,15 @@ export async function uploadDocuments(
   ownerName: string
 ) {
   const fileUploadsArray: Array<Promise<any>> = files.map(
-    (file: UploadFileType, index: number) => {
-      const fileName = `${ownerName}-${index + 1}`;
+    (file: UploadFileType) => {
+      const fileName = `${ownerName}/${file.name}`;
       return uploadFile(file, fileName);
     }
   );
 
   try {
-    Promise.all(fileUploadsArray);
+    const response = await Promise.all(fileUploadsArray);
+    return response;
   } catch (e) {
     console.error(e);
   }

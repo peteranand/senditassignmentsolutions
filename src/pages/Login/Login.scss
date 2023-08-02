@@ -1,7 +1,9 @@
+@import '../../styles/_allModules';
+
 .login-wrapper {
   height: 100vh;
-//   display: flex;
-//   justify-content: center;
+  //   display: flex;
+  //   justify-content: center;
   .form {
     display: flex;
     flex-direction: column;
@@ -11,7 +13,16 @@
     & input {
       margin-left: auto;
       margin-right: auto;
-      width: 30vw;
+    }
+  }
+}
+
+@include mobile-and-tablet {
+  .login-wrapper {
+    .form {
+      & input {
+        width: 100%;
+      }
     }
   }
 }

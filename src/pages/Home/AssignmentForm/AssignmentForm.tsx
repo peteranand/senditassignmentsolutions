@@ -1,35 +1,66 @@
 import {Rule} from 'antd/es/form';
+import React from 'react';
 
 import {Button} from '../../../components/Button/Button';
 import {Form, FormItem} from '../../../components/Form';
 import {Input} from '../../../components/Input';
-import {InputNumber} from '../../../components/InputNumber';
 import {SelectBox} from '../../../components/SelectBox';
 import {TextArea} from '../../../components/TextArea';
 import {UploadFiles} from '../../../components/UploadFile/UploadFile';
-import {addAssignment} from '../../../services/assignment';
+import {UploadFileType} from '../../../components/UploadFile/UploadFiles.interface';
+import {addAssignment, uploadDocuments} from '../../../services/assignment';
+import {AssignmentData} from '../../../types/asssignments';
 
 import './AssignmentForm.scss';
+const OPTIONS = [
+  {
+    value: '1',
+    label: 'Not Identified',
+  },
+  {
+    value: '2',
+    label: 'Closed',
+  },
+];
 
 export function AssignmentForm(): JSX.Element {
-  const OPTIONS = [
-    {
-      value: '1',
-      label: 'Not Identified',
-    },
-    {
-      value: '2',
-      label: 'Closed',
-    },
-  ];
+  const [uploadFiles, setUploadFiles] = React.useState<UploadFileType[]>([]);
 
   const commonRules: Rule[] = [{required: true}];
 
   const onFinish = async (values: any) => {
     const {upload, ...documentData} = values;
     if (documentData?.description === undefined) documentData.description = '';
-    const result = await addAssignment(documentData);
-    console.log({values, result});
+    console.log({values});
+
+    documentData.documents = [];
+    if (uploadFiles.length > 0) {
+      const documentPathArray = await uploadDocuments(
+        uploadFiles,
+        'anandpeter'
+      );
+      documentData.documents = documentPathArray;
+    }
+
+    console.log({documentData});
+    const response = await addAssignment(documentData);
+    console.log({response});
+  };
+
+  React.useEffect(() => {
+    console.log({uploadFiles});
+  }, [uploadFiles]);
+
+  const onUploadFile = (newFile: UploadFileType) => {
+    setUploadFiles((prevFiles) => [...prevFiles, newFile]);
+  };
+  const onRemoveFile = (removedFile: UploadFileType) => {
+    setUploadFiles((prevFiles) => {
+      const index = prevFiles.indexOf(removedFile);
+      const newFileList = prevFiles.slice();
+      newFileList.splice(index, 1);
+      return newFileList;
+    });
   };
 
   return (
@@ -66,8 +97,12 @@ export function AssignmentForm(): JSX.Element {
       <FormItem label='Description' name='description' rules={[]}>
         <TextArea placeholder='Autosize based on content lines' />
       </FormItem>
-      <FormItem label='Upload' name='upload' help='Upload the assignment'>
-        <UploadFiles />
+      <FormItem label='Upload' name='upload'>
+        <UploadFiles
+          fileList={uploadFiles}
+          onUpload={onUploadFile}
+          onRemove={onRemoveFile}
+        />
       </FormItem>
       <FormItem>
         <Button className='submit-button' htmlType='submit'>

@@ -7,8 +7,8 @@ export async function uploadFile(document: any, fileName: string) {
   try {
     const url: string = `${PATH}${fileName}`;
     const storageRef = ref(storage, url);
-    const response = await uploadBytes(storageRef, document);
-    console.log({response});
+    await uploadBytes(storageRef, document);
+    return storageRef.fullPath;
   } catch (e) {
     console.error(e);
   }
@@ -34,7 +34,7 @@ export async function getUploadedFileURLs(
 
 export async function addDocument(
   collectionName: string,
-  data: Record<string, string>
+  data: Record<string, string | string[]>
 ) {
   try {
     const collectionRef = collection(fireStore, collectionName);

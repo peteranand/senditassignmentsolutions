@@ -1,9 +1,11 @@
+@import '../../styles/_allModules';
+
 .home-content {
   padding: 5rem 10vw;
   gap: 5rem;
   display: flex;
   flex-direction: row;
-  height: 100dvh;
+  height: 100vh;
   justify-content: center;
   box-sizing: border-box;
   & > *:first-child,
@@ -12,9 +14,10 @@
   }
 }
 
-@media only screen and (min-width: 320px) and (max-width: 768px) {
+@include mobile-and-tablet {
   .home-content {
     flex-direction: column;
+    padding: 5rem 1rem 1rem 1rem;
     height: auto;
     & > *:first-child,
     & > *:nth-child(2) {

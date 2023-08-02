@@ -3,30 +3,23 @@ import React from 'react';
 import {UploadOutlined} from '@ant-design/icons';
 import {Button, Upload} from 'antd';
 import type {UploadFile, UploadProps} from 'antd/es/upload/interface';
+import {UploadFilesProps} from './UploadFiles.interface';
 
-export function UploadFiles() {
-  const [fileList, setFileList] = React.useState<UploadFileType[]>([]);
-
-  const props: UploadProps = {
+export function UploadFiles(props: UploadFilesProps) {
+  const uploadProps: UploadProps = {
     onRemove: (file: UploadFile) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
+      props.onRemove(file);
     },
     beforeUpload: (file: UploadFile) => {
-      setFileList([...fileList, file]);
-
+      props.onUpload(file);
       return false;
     },
-    fileList,
+    fileList: props.fileList,
   };
 
   return (
-    <Upload {...props}>
+    <Upload {...uploadProps}>
       <Button icon={<UploadOutlined />}>Click to Upload</Button>
     </Upload>
   );
 }
-
-export type UploadFileType = UploadFile<File>;

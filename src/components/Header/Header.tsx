@@ -4,6 +4,7 @@ import {Logo} from './Logo';
 import {useNavigate} from 'react-router-dom';
 
 import './Header.scss';
+import {MobileDrawer} from './MobileDrawer/MobileDrawer';
 
 export function Header(): JSX.Element {
   const navigation = useNavigate();
@@ -29,8 +30,11 @@ export function Header(): JSX.Element {
             </li>
           ))}
         </ul>
-        <Button onClick={onClickLogin}>{LOGIN_LABEL}</Button>
       </div>
+      <Button className='login-button' onClick={onClickLogin}>
+        {LOGIN_LABEL}
+      </Button>
+      <MobileDrawer />
     </header>
   );
 }

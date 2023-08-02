@@ -1,4 +1,4 @@
-export interface AssignmentData extends Record<string, string> {
+export interface AssignmentData extends Record<string, string | string[]> {
   /**
    * name of person adding assignment
    * aka owner of assignment (OOA)
@@ -24,4 +24,8 @@ export interface AssignmentData extends Record<string, string> {
    * short description for the assignment
    */
   description: string;
+  /**
+   * Array of document paths in firebase storage
+   */
+  documents: Array<string>;
 }

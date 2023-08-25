@@ -1,1 +1,1 @@
-export {AssignmentForm as InputForm} from './AssignmentForm';
+export {AssignmentForm} from './AssignmentForm';

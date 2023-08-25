@@ -2,9 +2,9 @@ import {ROUTES} from '../../constants/routes.constants';
 import {Button} from '../Button';
 import {Logo} from './Logo';
 import {useNavigate} from 'react-router-dom';
+import {MobileDrawer} from './MobileDrawer/MobileDrawer';
 
 import './Header.scss';
-import {MobileDrawer} from './MobileDrawer/MobileDrawer';
 
 export function Header(): JSX.Element {
   const navigation = useNavigate();

@@ -1,15 +1,14 @@
 import {Rule} from 'antd/es/form';
 import React from 'react';
 
-import {Button} from '../../../components/Button/Button';
-import {Form, FormItem} from '../../../components/Form';
-import {Input} from '../../../components/Input';
-import {SelectBox} from '../../../components/SelectBox';
-import {TextArea} from '../../../components/TextArea';
-import {UploadFiles} from '../../../components/UploadFile/UploadFile';
-import {UploadFileType} from '../../../components/UploadFile/UploadFiles.interface';
-import {addAssignment, uploadDocuments} from '../../../services/assignment';
-import {AssignmentData} from '../../../types/asssignments';
+import {Button} from '@components/Button/Button';
+import {Form, FormItem} from '@components/Form';
+import {Input} from '@components/Input';
+import {SelectBox} from '@components/SelectBox';
+import {TextArea} from '@components/TextArea';
+import {UploadFiles} from '@components/UploadFile/UploadFile';
+import {UploadFileType} from '@components/UploadFile/UploadFiles.interface';
+import {addAssignment, uploadDocuments} from '@services/assignment';
 
 import './AssignmentForm.scss';
 const OPTIONS = [

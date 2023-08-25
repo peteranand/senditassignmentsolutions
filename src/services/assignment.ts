@@ -1,5 +1,5 @@
 import {UploadFileType} from '../components/UploadFile';
-import {AssignmentData} from '../types/asssignments';
+import {AssignmentData} from '../Types/asssignments';
 import {addDocument, getAllDocuments, uploadFile} from './firebase';
 
 const COLLECTION = {

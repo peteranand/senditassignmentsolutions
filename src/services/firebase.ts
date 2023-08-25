@@ -21,12 +21,11 @@ export async function getUploadedFileURLs(
     const url: string = `${PATH}${jobId}`;
     const storageRef = ref(storage, url);
     const response = await listAll(storageRef);
-    let urlList: Array<string> = [];
-    response.items.map(async (item) => {
+    let urlList = response.items.map(async (item) => {
       const downloadURL = await getDownloadURL(item);
-      urlList.push(downloadURL);
+      return downloadURL;
     });
-    return urlList;
+    return Promise.all(urlList);
   } catch (e) {
     console.error(e);
   }

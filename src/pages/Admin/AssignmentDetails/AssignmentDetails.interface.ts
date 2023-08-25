@@ -1,3 +1,3 @@
-import {AssignmentData} from '../../../types/asssignments';
+import {AssignmentData} from '../../../Types/asssignments';
 
 export interface AssignmentProps extends AssignmentData {}

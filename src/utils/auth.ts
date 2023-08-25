@@ -1,21 +1,19 @@
-import {addToSessionStorage, getFromSessionStorage} from './storage';
+import {getUserCreds} from '@utils/env';
+import {addToSessionStorage, getFromSessionStorage} from '@utils/storage';
 
 const authKey = 'authUser';
-const USERNAME = 'anandpp',
-  PASSWORD = 'ppanand';
-export function TEMPAuthentication({
-  username,
-  password,
-}: Record<string, string>) {
-  if (USERNAME === username && PASSWORD === password) {
-    addToSessionStorage(authKey, username);
+export function TEMPAuthentication(args: Record<string, string>) {
+  const {username, password} = getUserCreds();
+  if (username === args.username && password === args.password) {
+    addToSessionStorage(authKey, args.username);
     return {success: true};
   }
   return {success: false};
 }
 
 export function TEMPIsAuthenticated(): boolean {
+  const {username} = getUserCreds();
   const authUser = getFromSessionStorage(authKey);
-  if (authUser === USERNAME) return true;
+  if (authUser === username) return true;
   return false;
 }

@@ -1,9 +1,13 @@
 import {useNavigate} from 'react-router-dom';
-import {Button} from '../../components/Button';
-import {Form, FormItem} from '../../components/Form';
-import {Input} from '../../components/Input';
-import {ROUTES} from '../../constants/routes.constants';
-import {TEMPAuthentication} from '../../utils/auth';
+import {Button} from '@components/Button';
+import {Form, FormItem} from '@components/Form';
+import {Input} from '@components/Input';
+import {ROUTES} from '@constants/routes.constants';
+import {TEMPAuthentication} from '@utils/auth';
+import {
+  LOGIN_BUTTON_TXT as BUTTON_TEXT,
+  RETURN_HOME_TEXT,
+} from './Login.constants';
 
 import './Login.scss';
 
@@ -26,9 +30,9 @@ export function Login() {
           <Input type='password' />
         </FormItem>
         <FormItem>
-          <Button htmlType='submit'>Login</Button>
+          <Button htmlType='submit'>{BUTTON_TEXT}</Button>
         </FormItem>
-        <a href={ROUTES.HOME}>Back to Home</a>
+        <a href={ROUTES.HOME}>{RETURN_HOME_TEXT}</a>
       </Form>
     </div>
   );

@@ -1,5 +1,5 @@
-import {Card} from '../../../components/Card';
-import {List} from '../../../components/List';
+import {Card} from '@components/Card';
+import {List} from '@components/List';
 import {AssignmentProps} from './AssignmentDetails.interface';
 
 export function AssignmentDetails(props: AssignmentProps) {

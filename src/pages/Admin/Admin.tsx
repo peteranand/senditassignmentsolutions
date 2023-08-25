@@ -1,8 +1,8 @@
 import React from 'react';
-import {getAllAssignments} from '../../services/assignment';
-import {AssignmentData} from '../../types/asssignments';
+import {getAllAssignments} from '@services/assignment';
+import {AssignmentData} from '@Types/asssignments';
 import {AssignmentDescription} from './AssignmentDescription';
-import {AssignmentDetails} from './AssignmentDetails';
+// import {AssignmentDetails} from './AssignmentDetails';
 
 export function Admin() {
   const [data, setData] = React.useState<Array<AssignmentData>>([]);

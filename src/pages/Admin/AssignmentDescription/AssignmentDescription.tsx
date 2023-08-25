@@ -1,6 +1,6 @@
-import {Card} from '../../../components/Card';
-import {Descriptions} from '../../../components/Descriptions';
-import {List} from '../../../components/List';
+import {Card} from '@components/Card';
+import {Descriptions} from '@components/Descriptions';
+import {List} from '@components/List';
 import {AssignmentProps} from './AssignmentDescription.interface';
 
 export function AssignmentDescription(props: AssignmentProps) {

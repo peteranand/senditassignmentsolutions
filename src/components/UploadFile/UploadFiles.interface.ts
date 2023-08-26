@@ -15,4 +15,8 @@ export interface UploadFilesProps {
    * Array of upload files
    */
   fileList: Array<UploadFileType>;
+  /**
+   * maximum allowed file size
+   */
+  maxFileSize: number;
 }

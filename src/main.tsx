@@ -16,3 +16,14 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+
+/**
+ * 
+ * 
+ * TODO:
+ *  - Implement max file size for upload files
+ *  - move upload file logic to component level
+ *  - update admin page
+ *  - check if there are anything else left to do from code that was lost
+ */

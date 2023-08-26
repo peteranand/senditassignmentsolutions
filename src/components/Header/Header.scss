@@ -6,10 +6,14 @@
   box-sizing: border-box;
   width: 100%;
   padding: 1.25rem 4rem;
-  position: absolute;
   align-items: center;
-  top: 0;
   box-sizing: border-box;
+
+  .logo {
+    cursor: pointer;
+    margin-right: auto;
+  }
+
   .header-nav-container {
     display: flex;
     justify-content: flex-end;
@@ -18,7 +22,7 @@
     & ul {
       display: flex;
       flex-direction: row;
-      gap: 2rem;
+      gap: 1rem;
       & > li {
         list-style: none;
         & > a {

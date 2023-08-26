@@ -1,4 +1,10 @@
 body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  & > div {
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+  }
 }

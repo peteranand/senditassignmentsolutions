@@ -8,47 +8,45 @@ import {SelectBox} from '@components/SelectBox';
 import {TextArea} from '@components/TextArea';
 import {UploadFiles} from '@components/UploadFile/UploadFile';
 import {UploadFileType} from '@components/UploadFile/UploadFiles.interface';
-import {addAssignment, uploadDocuments} from '@services/assignment';
+import {addAssignment} from '@services/assignment';
+import {SELECT_INPUT_OPTIONS as OPTIONS} from './AssignmentForm.constants';
+import {Modal} from '@components/Modal';
 
 import './AssignmentForm.scss';
-const OPTIONS = [
-  {
-    value: '1',
-    label: 'Not Identified',
-  },
-  {
-    value: '2',
-    label: 'Closed',
-  },
-];
 
 export function AssignmentForm(): JSX.Element {
   const [uploadFiles, setUploadFiles] = React.useState<UploadFileType[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [form] = Form.useForm();
 
   const commonRules: Rule[] = [{required: true}];
 
   const onFinish = async (values: any) => {
-    const {upload, ...documentData} = values;
-    if (documentData?.description === undefined) documentData.description = '';
-    console.log({values});
+    try {
+      setLoading(true);
+      const {upload, ...documentData} = values;
+      if (documentData?.description === undefined)
+        documentData.description = '';
 
-    documentData.documents = [];
-    if (uploadFiles.length > 0) {
-      const documentPathArray = await uploadDocuments(
-        uploadFiles,
-        'anandpeter'
-      );
-      documentData.documents = documentPathArray;
+      const response = await addAssignment(documentData, uploadFiles);
+
+      console.log({documentData});
+      console.log({response});
+      onOrderSuccess();
+    } catch (e) {
+      console.error(e);
+      setLoading(false);
     }
-
-    console.log({documentData});
-    const response = await addAssignment(documentData);
-    console.log({response});
   };
 
-  React.useEffect(() => {
-    console.log({uploadFiles});
-  }, [uploadFiles]);
+  const onOrderSuccess = () => {
+    Modal.success({
+      title: 'Order Placed!',
+      content: 'Ipsum lorem anands boredom',
+    });
+    form.resetFields();
+    setUploadFiles([]);
+  };
 
   const onUploadFile = (newFile: UploadFileType) => {
     setUploadFiles((prevFiles) => [...prevFiles, newFile]);
@@ -63,7 +61,11 @@ export function AssignmentForm(): JSX.Element {
   };
 
   return (
-    <Form className='form-container' layout='vertical' onFinish={onFinish}>
+    <Form
+      className='form-container'
+      layout='vertical'
+      onFinish={onFinish}
+      form={form}>
       <FormItem label='Name' name='name' rules={[...commonRules]}>
         <Input placeholder='example' />
       </FormItem>
@@ -87,10 +89,13 @@ export function AssignmentForm(): JSX.Element {
           label='Academic Level'
           name='academicLevel'
           rules={[...commonRules]}>
-          <SelectBox options={OPTIONS} placeholder='Select Level' />
+          <SelectBox
+            options={OPTIONS.ACADEMIC_LEVEL}
+            placeholder='Select Level'
+          />
         </FormItem>
         <FormItem label='Subject' name='subject' rules={[...commonRules]}>
-          <SelectBox options={OPTIONS} placeholder='Select Subject' />
+          <SelectBox options={OPTIONS.SUBJECT} placeholder='Select Subject' />
         </FormItem>
       </div>
       <FormItem label='Description' name='description' rules={[]}>
@@ -104,7 +109,7 @@ export function AssignmentForm(): JSX.Element {
         />
       </FormItem>
       <FormItem>
-        <Button className='submit-button' htmlType='submit'>
+        <Button loading={loading} className='submit-button' htmlType='submit'>
           Order Now
         </Button>
       </FormItem>

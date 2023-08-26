@@ -1,14 +1,12 @@
 @import '../../styles/_allModules';
 
 .login-wrapper {
-  height: 100vh;
-  //   display: flex;
-  //   justify-content: center;
+  margin-block: auto;
+  transform: translate(0, -30%);
   .form {
     display: flex;
     flex-direction: column;
     gap: 0rem;
-    padding-top: 30vh;
     align-items: center;
     & input {
       margin-left: auto;
@@ -20,8 +18,12 @@
 @include mobile-and-tablet {
   .login-wrapper {
     .form {
-      & input {
-        width: 100%;
+      & > * {
+        width: 90vw;
+      }
+
+      & > :nth-child(n + 3) {
+        width: auto;
       }
     }
   }

@@ -1,12 +1,21 @@
+@import '../../styles/_allModules';
+
 .button {
   border-radius: 0.375rem;
   padding: 1rem;
   height: auto;
   width: auto;
   box-sizing: border-box;
-  color: #fff;
+  color: $color-primary-white;
   font-size: 1rem;
   font-weight: 600;
   line-height: normal;
-  background-color: #000000;
+  background-color: $color-primary-black;
+  border: none !important;
+  &:hover {
+    color: $color-primary-white !important;
+  }
+  &:active {
+    color: $color-primary-white !important;
+  }
 }

@@ -1,27 +1,44 @@
-import {Card} from '@components/Card';
 import {Descriptions} from '@components/Descriptions';
-import {List} from '@components/List';
 import {AssignmentProps} from './AssignmentDescription.interface';
+import {AssignmentData} from '@Types/asssignments';
+
+import cn from './AssignmentDescription.module.scss';
 
 export function AssignmentDescription(props: AssignmentProps) {
-  const DETAILS = [
+  const DETAILS: {
+    ['key']: keyof AssignmentData;
+    ['label']: string;
+  }[] = [
     {key: 'name', label: 'Name'},
     {key: 'email', label: 'Email'},
     {key: 'phoneNumber', label: 'Phone Number'},
     {key: 'academicLevel', label: 'Academic Level'},
     {key: 'subject', label: 'Subject'},
     {key: 'description', label: 'Description'},
+    {key: 'documents', label: 'Documents'},
   ];
-  const NO_CONTENT_TEXT = 'NO CONTENT';
 
+  const title = `${props.name}'s Assignment`;
   return (
-    <Descriptions title='User Info'>
+    <Descriptions title={title} className={cn.desc}>
       {DETAILS.map(({key, label}) => {
-        let content = props[key];
-        // if(content===undefined) content = 'NA'
+        if (key === 'documents' && props[key].length !== 0) {
+          const documents = props[key] as string[];
+          return (
+            <Descriptions.Item className={cn.desc__docList} label={label}>
+              {documents.map((docHref, index) => {
+                const text = `Document-${index + 1}`;
+                return <a href={docHref}>{text}</a>;
+              })}
+            </Descriptions.Item>
+          );
+        }
+        let content = props[key] as string;
         return (
-          <Descriptions.Item label={label}>
-            <span>{content}</span>
+          <Descriptions.Item className={cn.desc__item} label={label}>
+            <span className={cn.desc__item_content} title={content}>
+              {content}
+            </span>
           </Descriptions.Item>
         );
       })}

@@ -1,0 +1,18 @@
+.desc {
+  &__docList {
+    & > div > :last-child {
+      flex-wrap: wrap !important;
+    }
+    & a {
+      padding-inline-end: 1rem;
+    }
+  }
+  &__item {
+    &_content {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+}

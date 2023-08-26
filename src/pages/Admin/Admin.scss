@@ -1,0 +1,13 @@
+@import '../../styles/_allModules';
+
+@include desktop-and-large-desktop {
+  .admin {
+    padding-inline: 2rem;
+  }
+}
+
+@include mobile-and-tablet {
+  .admin {
+    padding-inline: 1rem;
+  }
+}

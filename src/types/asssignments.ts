@@ -1,4 +1,6 @@
-export interface AssignmentData extends Record<string, string | string[]> {
+import {Timestamp} from 'firebase/firestore';
+
+export interface AssignmentData {
   /**
    * name of person adding assignment
    * aka owner of assignment (OOA)
@@ -28,4 +30,13 @@ export interface AssignmentData extends Record<string, string | string[]> {
    * Array of document paths in firebase storage
    */
   documents: Array<string>;
+  /**
+   * unique job Id for each job
+   */
+  jobId: string;
+  /**
+   * created date of assignment
+   * parse before use
+   */
+  createdAt: Timestamp;
 }

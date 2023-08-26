@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {UploadOutlined} from '@ant-design/icons';
-import {Button, Upload} from 'antd';
+import {Button, Upload, message} from 'antd';
 import type {UploadFile, UploadProps} from 'antd/es/upload/interface';
 import {UploadFilesProps} from './UploadFiles.interface';
 
@@ -11,6 +11,13 @@ export function UploadFiles(props: UploadFilesProps) {
       props.onRemove(file);
     },
     beforeUpload: (file: UploadFile) => {
+      if (!file.size) return false;
+      const isLt2M = file?.size / 1024 / 1024 < props.maxFileSize;
+      if (!isLt2M) {
+        message.error(`Document must smaller than ${props.maxFileSize}MB!`);
+        return false;
+      }
+
       props.onUpload(file);
       return false;
     },

@@ -1,5 +1,4 @@
 import {ROUTES} from '../../constants/routes.constants';
-import {Button} from '../Button';
 import {Logo} from './Logo';
 import {useNavigate} from 'react-router-dom';
 import {MobileDrawer} from './MobileDrawer/MobileDrawer';
@@ -21,7 +20,9 @@ export function Header(): JSX.Element {
 
   return (
     <header className='header'>
-      <Logo />
+      <a href={ROUTES.HOME} className='logo'>
+        <Logo />
+      </a>
       <div className='header-nav-container'>
         <ul>
           {NAV_ITEMS.map(({label, href}) => (
@@ -31,9 +32,9 @@ export function Header(): JSX.Element {
           ))}
         </ul>
       </div>
-      <Button className='login-button' onClick={onClickLogin}>
+      {/* <Button className='login-button' onClick={onClickLogin}>
         {LOGIN_LABEL}
-      </Button>
+      </Button> */}
       <MobileDrawer />
     </header>
   );

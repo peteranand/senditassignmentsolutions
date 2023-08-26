@@ -6,12 +6,9 @@ import './Home.scss';
 
 export function Home(): JSX.Element {
   return (
-    <div>
-      <Header />
-      <main className='home-content'>
-        <Desctription />
-        <AssignmentForm />
-      </main>
-    </div>
+    <main className='home-content'>
+      <Desctription />
+      <AssignmentForm />
+    </main>
   );
 }

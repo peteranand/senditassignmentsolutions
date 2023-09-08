@@ -1,9 +1,11 @@
-import React from 'react';
-
 import {UploadOutlined} from '@ant-design/icons';
-import {Button, Upload, message} from 'antd';
-import type {UploadFile, UploadProps} from 'antd/es/upload/interface';
+import {Button, Upload} from 'antd';
 import {UploadFilesProps} from './UploadFiles.interface';
+import {message} from '@components/Message';
+
+import {LITERALS} from './UploadFile.constants';
+
+import type {UploadFile, UploadProps} from 'antd/es/upload/interface';
 
 export function UploadFiles(props: UploadFilesProps) {
   const uploadProps: UploadProps = {
@@ -12,10 +14,22 @@ export function UploadFiles(props: UploadFilesProps) {
     },
     beforeUpload: (file: UploadFile) => {
       if (!file.size) return false;
-      const isLt2M = file?.size / 1024 / 1024 < props.maxFileSize;
-      if (!isLt2M) {
-        message.error(`Document must smaller than ${props.maxFileSize}MB!`);
-        return false;
+
+      if (props.maxFileCount !== undefined) {
+        if (props.fileList.length - 1 > props.maxFileCount) {
+          message.error(LITERALS.FILE_COUNT_EXCEEDED);
+          return false;
+        }
+      }
+
+      if (props.maxFileSize !== undefined) {
+        const isLtLimit = file?.size / 1024 / 1024 < props.maxFileSize;
+        if (!isLtLimit) {
+          message.error(
+            `${LITERALS.FILE_SIZE_EXCEEDED.HEAD} ${props.maxFileSize} ${LITERALS.FILE_SIZE_EXCEEDED.TRAIL}`
+          );
+          return false;
+        }
       }
 
       props.onUpload(file);
@@ -26,7 +40,7 @@ export function UploadFiles(props: UploadFilesProps) {
 
   return (
     <Upload {...uploadProps}>
-      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      <Button icon={<UploadOutlined />}>{LITERALS.UPLOAD_BUTTON}</Button>
     </Upload>
   );
 }

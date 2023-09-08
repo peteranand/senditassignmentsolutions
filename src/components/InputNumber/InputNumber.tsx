@@ -3,6 +3,7 @@ import {InputNumberProps} from './InputNumber.interface';
 
 import cn from './InputNumber.module.scss';
 
-export function InputNumber({...props}: InputNumberProps) {
-  return <AntInput {...props} />;
+export function InputNumber({className, ...props}: InputNumberProps) {
+  const componentClassName = `${cn.inputttattaa} ${className}`;
+  return <AntInput className={componentClassName} {...props} />;
 }

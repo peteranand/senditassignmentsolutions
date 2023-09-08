@@ -1,5 +1,4 @@
 import {UploadFile} from 'antd';
-import React from 'react';
 
 export type UploadFileType = UploadFile<File>;
 export interface UploadFilesProps {
@@ -18,5 +17,9 @@ export interface UploadFilesProps {
   /**
    * maximum allowed file size
    */
-  maxFileSize: number;
+  maxFileSize?: number;
+  /**
+   * maximum allowed number of files
+   */
+  maxFileCount?: number;
 }

@@ -1,8 +1,5 @@
 @import '../../styles/_mixins';
 
 .inputContainer {
-  // display: flex;
-  // flex-direction: row;
-  // gap: 16px;
-  @include input-container-style;
+  width: 100%;
 }

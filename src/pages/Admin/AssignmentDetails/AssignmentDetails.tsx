@@ -11,14 +11,14 @@ export function AssignmentDetails(props: AssignmentProps) {
     {key: 'subject', label: 'Subject'},
     {key: 'description', label: 'Description'},
   ];
-  const NO_CONTENT_TEXT = "NO CONTENT"
+  const NO_CONTENT_TEXT = 'NO CONTENT';
 
   return (
     <Card>
       <List>
         {DETAILS.map(({key, label}) => {
-          let content = props[key];
-          if(content===undefined) content = 'NA'
+          let content = props[key as keyof AssignmentProps];
+          if (content === undefined) content = 'NA';
           return (
             <List.Item>
               <span>{label}</span>

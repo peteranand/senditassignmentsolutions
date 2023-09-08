@@ -1,3 +1,4 @@
-export const HEADING = 'A Special credit card made for Developers';
+export const HEADING =
+  'Got pending assignments,<br> But no time?<br> Just <i>Send <span>i</span>t</i>, then submit it.';
 export const CONTENT =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vehicula massa in enim luctus. Rutrum arcu.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vehicula massa in enim luctus. ';
+  'Plagerism free assignment writing sevices<br> at student friendly prices';

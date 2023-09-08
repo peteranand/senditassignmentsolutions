@@ -22,9 +22,17 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
  * 
  * 
  * TODO:
- *  - Implement max file size for upload files
- *  - move upload file logic to component level
+ *  - Implement max file size for upload files -  done
+ *  - move upload file logic to component level - done 
  *  - update admin page
  *  - implement message component for comming soon
  *  - check if there are anything else left to do from code that was lost
+ */
+
+
+/**
+ * **New
+ * Fields to add
+ *  - Word Count/ Page Count
+ *  - Deadline
  */

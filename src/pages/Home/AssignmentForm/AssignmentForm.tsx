@@ -1,18 +1,25 @@
-import {Rule} from 'antd/es/form';
 import React from 'react';
 
 import {Button} from '@components/Button/Button';
-import {Form, FormItem} from '@components/Form';
+import {Form, FormItem, Rule} from '@components/Form';
 import {Input} from '@components/Input';
 import {SelectBox} from '@components/SelectBox';
 import {TextArea} from '@components/TextArea';
 import {UploadFiles} from '@components/UploadFile/UploadFile';
 import {UploadFileType} from '@components/UploadFile/UploadFiles.interface';
 import {addAssignment} from '@services/assignment';
-import {SELECT_INPUT_OPTIONS as OPTIONS} from './AssignmentForm.constants';
 import {Modal} from '@components/Modal';
 
+import {
+  INPUT_LITERALS as IL,
+  LITERALS as L,
+  SELECT_INPUT_OPTIONS as OPTIONS,
+  UPLOAD,
+} from './AssignmentForm.constants';
+
 import './AssignmentForm.scss';
+import {DatePicker} from '@components/DatePicker';
+import {InputNumber} from '@components/InputNumber';
 
 export function AssignmentForm(): JSX.Element {
   const [uploadFiles, setUploadFiles] = React.useState<UploadFileType[]>([]);
@@ -28,11 +35,12 @@ export function AssignmentForm(): JSX.Element {
       if (documentData?.description === undefined)
         documentData.description = '';
 
-      const response = await addAssignment(documentData, uploadFiles);
+      console.log({documentData, type: new Date(documentData.deadline)});
 
-      console.log({documentData});
-      console.log({response});
-      onOrderSuccess();
+      // const response = await addAssignment(documentData, uploadFiles);
+      // console.log({response});
+
+      // onOrderSuccess();
     } catch (e) {
       console.error(e);
       setLoading(false);
@@ -41,10 +49,11 @@ export function AssignmentForm(): JSX.Element {
 
   const onOrderSuccess = () => {
     Modal.success({
-      title: 'Order Placed!',
-      content: 'Ipsum lorem anands boredom',
+      title: L.ORDER_SUCCESS.TITLE,
+      content: L.ORDER_SUCCESS.CONTENT,
     });
     form.resetFields();
+    setLoading(false);
     setUploadFiles([]);
   };
 
@@ -66,59 +75,96 @@ export function AssignmentForm(): JSX.Element {
       layout='vertical'
       onFinish={onFinish}
       form={form}>
-      <FormItem label='Name' name='name' rules={[...commonRules]}>
-        <Input placeholder='example' />
-      </FormItem>
+      <div className='row-block'>
+        <FormItem
+          label={IL.NAME.LABEL}
+          name={IL.NAME.NAME}
+          rules={[...commonRules]}>
+          <Input placeholder={IL.NAME.PLACEHOLDER} />
+        </FormItem>
+        <FormItem
+          label={IL.PHONE.LABEL}
+          name={IL.PHONE.NAME}
+          rules={[...commonRules]}>
+          <Input type='number' placeholder={IL.PHONE.PLACEHOLDER} />
+        </FormItem>
+      </div>
       <FormItem
-        label='Email'
-        name='email'
+        label={IL.EMAIL.LABEL}
+        name={IL.EMAIL.NAME}
         rules={[
           ...commonRules,
-          {type: 'email', message: 'Input is not a valid E-mail'},
+          {type: 'email', message: IL.EMAIL.VALIDATION_MSG},
         ]}>
-        <Input placeholder='you@company.com' />
+        <Input placeholder={IL.EMAIL.PLACEHOLDER} />
       </FormItem>
-      <FormItem
-        label='Phone Number'
-        name='phoneNumber'
-        rules={[...commonRules]}>
-        <Input placeholder='+91 00000-00000' maxLength={10} />
-      </FormItem>
-      <div className='select-block'>
+
+      <div className='row-block'>
         <FormItem
-          label='Academic Level'
-          name='academicLevel'
+          label={IL.ACADEMIC_LEVEL.LABEL}
+          name={IL.ACADEMIC_LEVEL.NAME}
           rules={[...commonRules]}>
           <SelectBox
             options={OPTIONS.ACADEMIC_LEVEL}
-            placeholder='Select Level'
+            placeholder={IL.ACADEMIC_LEVEL.PLACEHOLDER}
           />
         </FormItem>
-        <FormItem label='Subject' name='subject' rules={[...commonRules]}>
-          <SelectBox options={OPTIONS.SUBJECT} placeholder='Select Subject' />
+        <FormItem
+          label={IL.SUBJECT.LABEL}
+          name={IL.SUBJECT.NAME}
+          rules={[...commonRules]}>
+          <SelectBox
+            options={OPTIONS.SUBJECT}
+            placeholder={IL.SUBJECT.PLACEHOLDER}
+          />
         </FormItem>
       </div>
-      <FormItem label='Description' name='description' rules={[]}>
-        <TextArea placeholder='Autosize based on content lines' />
+
+      <div className='row-block'>
+        <FormItem
+          label={IL.COUNT.LABEL}
+          name={IL.COUNT.NAME}
+          rules={[...commonRules]}>
+          <InputNumber
+            placeholder={IL.COUNT.PLACEHOLDER}
+            addonAfter={
+              <FormItem name={IL.COUNT_TYPE.NAME}>
+                <SelectBox
+                  popupMatchSelectWidth={80}
+                  className={'count-select'}
+                  options={OPTIONS.COUNT_TYPE}
+                  placeholder={IL.COUNT_TYPE.PLACEHOLDER}
+                  defaultValue={OPTIONS.COUNT_TYPE[0].value}
+                  defaultOpen
+                />
+              </FormItem>
+            }
+          />
+        </FormItem>
+        <FormItem
+          label={IL.DEADLINE.LABEL}
+          name={IL.DEADLINE.NAME}
+          rules={[...commonRules]}>
+          <DatePicker placeholder={IL.DEADLINE.PLACEHOLDER} />
+        </FormItem>
+      </div>
+      <FormItem label={IL.DESC.LABEL} name={IL.DESC.NAME} rules={[]}>
+        <TextArea placeholder={IL.DESC.PLACEHOLDER} />
       </FormItem>
-      <FormItem label='Upload' name='upload'>
+      <FormItem label={IL.UPLOAD.LABEL} name={IL.UPLOAD.NAME}>
         <UploadFiles
           fileList={uploadFiles}
           onUpload={onUploadFile}
           onRemove={onRemoveFile}
+          maxFileSize={UPLOAD.MAX_SIZE}
+          maxFileCount={UPLOAD.MAX_COUNT}
         />
       </FormItem>
       <FormItem>
         <Button loading={loading} className='submit-button' htmlType='submit'>
-          Order Now
+          {L.SUBMIT_BUTTON}
         </Button>
       </FormItem>
     </Form>
   );
 }
-
-/**
- * Doubts:
- * Academic level should be a number, text or select box??
- * does no of pages need a threshold
- */

@@ -5,7 +5,18 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  .select-block {
+  gap: 1rem;
+
+  //override antd margin
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+
+  .count-select {
+    min-width: 5.5rem;
+  }
+
+  .row-block {
     display: flex;
     flex-direction: row;
     gap: 1rem;

@@ -17,10 +17,12 @@ import {
   INPUT_LITERALS as IL,
   LITERALS as L,
   SELECT_INPUT_OPTIONS as OPTIONS,
+  PHONE_NUMBER_REGEX,
   UPLOAD,
 } from './AssignmentForm.constants';
 
 import './AssignmentForm.scss';
+import {message} from '@components/Message';
 
 export function AssignmentForm(): JSX.Element {
   const [uploadFiles, setUploadFiles] = React.useState<UploadFileType[]>([]);
@@ -29,24 +31,39 @@ export function AssignmentForm(): JSX.Element {
 
   const commonRules: Rule[] = [{required: true}];
 
+  const onStartSubmit = () => {
+    setLoading(true);
+    message.loading(L.LOADING_MESSAGE, 0);
+  };
+  const onEndSubmit = () => {
+    setLoading(false);
+    message.destroy();
+  };
+  const resetInputForm = () => {
+    form.resetFields();
+    setUploadFiles([]);
+  };
+
   const onFinish = async (values: any) => {
     try {
-      setLoading(true);
-      const {upload, countType, ...documentData} = values;
-      if (documentData?.description === undefined)
-        documentData.description = '';
+      onStartSubmit();
+      const {[IL.UPLOAD.NAME]: upload, ...documentData} = values;
+      if (documentData[IL.DESC.NAME] === undefined)
+        documentData[IL.DESC.NAME] = '';
 
-      documentData.count = `${documentData.count} ${documentData.countType}`;
+      documentData[IL.DEADLINE.NAME] = (documentData[IL.DEADLINE.NAME] as Dayjs)
+        .toDate()
+        .toDateString();
 
-      console.log({documentData, type: new Date(documentData.deadline)});
+      console.log({documentData});
 
-      // const response = await addAssignment(documentData, uploadFiles);
-      // console.log({response});
+      const response = await addAssignment(documentData, uploadFiles);
+      console.log({response});
 
-      // onOrderSuccess();
+      onOrderSuccess();
     } catch (e) {
+      onEndSubmit();
       console.error(e);
-      setLoading(false);
     }
   };
 
@@ -55,9 +72,8 @@ export function AssignmentForm(): JSX.Element {
       title: L.ORDER_SUCCESS.TITLE,
       content: L.ORDER_SUCCESS.CONTENT,
     });
-    form.resetFields();
-    setLoading(false);
-    setUploadFiles([]);
+    resetInputForm();
+    onEndSubmit();
   };
 
   const onUploadFile = (newFile: UploadFileType) => {
@@ -90,7 +106,13 @@ export function AssignmentForm(): JSX.Element {
         <FormItem
           label={IL.PHONE.LABEL}
           name={IL.PHONE.NAME}
-          rules={[...commonRules]}>
+          rules={[
+            ...commonRules,
+            {
+              pattern: new RegExp(PHONE_NUMBER_REGEX),
+              message: IL.PHONE.VALIDATION_MSG,
+            },
+          ]}>
           <Input type='number' placeholder={IL.PHONE.PLACEHOLDER} />
         </FormItem>
       </div>
@@ -126,24 +148,12 @@ export function AssignmentForm(): JSX.Element {
       <div className='row-block'>
         <FormItem
           className='form__count'
-          label={IL.COUNT.LABEL}
-          name={IL.COUNT.NAME}
+          label={IL.CONTENT_LIMIT.LABEL}
+          name={IL.CONTENT_LIMIT.NAME}
           rules={[...commonRules]}>
           <InputNumber
-            placeholder={IL.COUNT.PLACEHOLDER}
-            addonAfter={
-              <FormItem
-                name={IL.COUNT_TYPE.NAME}
-                initialValue={OPTIONS.COUNT_TYPE[0].value}>
-                <SelectBox
-                  popupMatchSelectWidth={80}
-                  className={'count-select'}
-                  options={OPTIONS.COUNT_TYPE}
-                  placeholder={IL.COUNT_TYPE.PLACEHOLDER}
-                  defaultOpen
-                />
-              </FormItem>
-            }
+            placeholder={IL.CONTENT_LIMIT.PLACEHOLDER}
+            addonAfter={<span>{L.CONTENT_LIMIT_TRAIL}</span>}
           />
         </FormItem>
         <FormItem

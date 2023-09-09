@@ -27,6 +27,14 @@ export interface AssignmentData {
    */
   description: string;
   /**
+   * specifies number of words or pages
+   */
+  contentLimit: string;
+  /**
+   * deadline date for assignment
+   */
+  deadline: string;
+  /**
    * Array of document paths in firebase storage
    */
   documents: Array<string>;
@@ -34,9 +42,4 @@ export interface AssignmentData {
    * unique job Id for each job
    */
   jobId: string;
-  /**
-   * created date of assignment
-   * parse before use
-   */
-  createdAt: Timestamp;
 }

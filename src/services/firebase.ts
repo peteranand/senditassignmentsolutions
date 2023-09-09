@@ -1,7 +1,18 @@
 import {fireStore, storage} from '../config/firebase';
 import {getDownloadURL, listAll, ref, uploadBytes} from 'firebase/storage';
-import {collection, getDocs, addDoc} from 'firebase/firestore';
-import {DOCUMENTS_DEFAULT_PATH as PATH} from '../constants/firebase.storage';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  query,
+  limit,
+  Timestamp,
+  orderBy,
+} from 'firebase/firestore';
+import {
+  DOCUMENTS_DEFAULT_PATH as PATH,
+  SERVICE_KEYS as K,
+} from '../constants/firebase.storage';
 
 export async function uploadFile(document: any, fileName: string) {
   try {
@@ -37,17 +48,31 @@ export async function addDocument(
 ) {
   try {
     const collectionRef = collection(fireStore, collectionName);
-    const response = await addDoc(collectionRef, data);
+    const timestamp = Timestamp.now();
+    const payload = {
+      ...data,
+      [K.CREATED_TIMESTAMP]: timestamp,
+      [K.UPDATED_TIMESTAMP]: timestamp,
+    };
+    const response = await addDoc(collectionRef, payload);
     return response.id;
   } catch (e) {
     console.error(e);
   }
 }
 
-export async function getAllDocuments(collectionName: string) {
+export async function getAllDocuments(
+  collectionName: string,
+  queries: Record<string, string | number> = {limit: 100}
+) {
   try {
     const collectionRef = collection(fireStore, collectionName);
-    const response = await getDocs(collectionRef);
+    const q = query(
+      collectionRef,
+      orderBy(K.CREATED_TIMESTAMP, 'desc'),
+      limit(queries.limit as number)
+    );
+    const response = await getDocs(q);
     const data = response.docs.map((doc) => ({...doc.data()}));
     return data;
   } catch (e) {

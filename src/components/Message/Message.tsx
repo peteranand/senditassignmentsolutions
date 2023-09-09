@@ -6,4 +6,5 @@ export const message = {
   warning: M.warning,
   error: M.error,
   destroy: M.destroy,
+  loading: M.loading,
 };

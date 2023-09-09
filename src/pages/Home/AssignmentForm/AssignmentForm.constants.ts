@@ -12,10 +12,6 @@ export const SELECT_INPUT_OPTIONS = {
     {label: 'Psychology', value: 'Psychology'},
     {label: 'Other', value: 'Other'},
   ],
-  COUNT_TYPE: [
-    {label: 'Pages', value: 'pages'},
-    {label: 'Words', value: 'words'},
-  ],
 };
 
 export const INPUT_LITERALS = {
@@ -34,6 +30,7 @@ export const INPUT_LITERALS = {
     LABEL: 'Phone Number',
     NAME: 'phoneNumber',
     PLACEHOLDER: '+91 78994-58163',
+    VALIDATION_MSG: 'Input is not a valid phone number',
   },
   ACADEMIC_LEVEL: {
     LABEL: 'Academic Level',
@@ -59,9 +56,9 @@ export const INPUT_LITERALS = {
     NAME: 'deadline',
     PLACEHOLDER: "Pick a date. I'm free anytime ;)",
   },
-  COUNT: {
-    LABEL: 'Word or Page count',
-    NAME: 'count',
+  CONTENT_LIMIT: {
+    LABEL: 'Content Limit',
+    NAME: 'contentLimit',
     PLACEHOLDER: 'Gimme them count',
   },
   COUNT_TYPE: {
@@ -70,12 +67,16 @@ export const INPUT_LITERALS = {
   },
 };
 
+export const PHONE_NUMBER_REGEX = '^([0|+[0-9]{1,5})?([7-9][0-9]{9})$';
+
 export const LITERALS = {
   ORDER_SUCCESS: {
     TITLE: 'Order Placed!',
     CONTENT: 'Ipsum lorem anands boredom',
   },
   SUBMIT_BUTTON: 'Order Now',
+  LOADING_MESSAGE: 'processing your order...',
+  CONTENT_LIMIT_TRAIL: 'Words',
 };
 
 export const UPLOAD = {

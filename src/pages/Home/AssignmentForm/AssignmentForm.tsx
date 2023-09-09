@@ -7,8 +7,11 @@ import {SelectBox} from '@components/SelectBox';
 import {TextArea} from '@components/TextArea';
 import {UploadFiles} from '@components/UploadFile/UploadFile';
 import {UploadFileType} from '@components/UploadFile/UploadFiles.interface';
-import {addAssignment} from '@services/assignment';
 import {Modal} from '@components/Modal';
+import {DatePicker} from '@components/DatePicker';
+import {InputNumber} from '@components/InputNumber';
+import {addAssignment} from '@services/assignment';
+import {Dayjs} from 'dayjs';
 
 import {
   INPUT_LITERALS as IL,
@@ -18,8 +21,6 @@ import {
 } from './AssignmentForm.constants';
 
 import './AssignmentForm.scss';
-import {DatePicker} from '@components/DatePicker';
-import {InputNumber} from '@components/InputNumber';
 
 export function AssignmentForm(): JSX.Element {
   const [uploadFiles, setUploadFiles] = React.useState<UploadFileType[]>([]);
@@ -31,9 +32,11 @@ export function AssignmentForm(): JSX.Element {
   const onFinish = async (values: any) => {
     try {
       setLoading(true);
-      const {upload, ...documentData} = values;
+      const {upload, countType, ...documentData} = values;
       if (documentData?.description === undefined)
         documentData.description = '';
+
+      documentData.count = `${documentData.count} ${documentData.countType}`;
 
       console.log({documentData, type: new Date(documentData.deadline)});
 
@@ -69,12 +72,14 @@ export function AssignmentForm(): JSX.Element {
     });
   };
 
+  const disableDatesBeforeToday = (date: Dayjs) => {
+    let now = new Date();
+    if (now < date.toDate()) return false;
+    return true;
+  };
+
   return (
-    <Form
-      className='form'
-      layout='vertical'
-      onFinish={onFinish}
-      form={form}>
+    <Form className='form' layout='vertical' onFinish={onFinish} form={form}>
       <div className='row-block'>
         <FormItem
           label={IL.NAME.LABEL}
@@ -98,7 +103,6 @@ export function AssignmentForm(): JSX.Element {
         ]}>
         <Input placeholder={IL.EMAIL.PLACEHOLDER} />
       </FormItem>
-
       <div className='row-block'>
         <FormItem
           label={IL.ACADEMIC_LEVEL.LABEL}
@@ -119,7 +123,6 @@ export function AssignmentForm(): JSX.Element {
           />
         </FormItem>
       </div>
-
       <div className='row-block'>
         <FormItem
           className='form__count'
@@ -147,11 +150,15 @@ export function AssignmentForm(): JSX.Element {
           label={IL.DEADLINE.LABEL}
           name={IL.DEADLINE.NAME}
           rules={[...commonRules]}>
-          <DatePicker placeholder={IL.DEADLINE.PLACEHOLDER} />
+          <DatePicker
+            picker='date'
+            disabledDate={disableDatesBeforeToday}
+            placeholder={IL.DEADLINE.PLACEHOLDER}
+          />
         </FormItem>
       </div>
       <FormItem label={IL.DESC.LABEL} name={IL.DESC.NAME} rules={[]}>
-        <TextArea placeholder={IL.DESC.PLACEHOLDER} />
+        <TextArea className={'text-area'} placeholder={IL.DESC.PLACEHOLDER} />
       </FormItem>
       <FormItem label={IL.UPLOAD.LABEL} name={IL.UPLOAD.NAME}>
         <UploadFiles

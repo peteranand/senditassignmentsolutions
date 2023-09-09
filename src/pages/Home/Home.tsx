@@ -1,5 +1,4 @@
 import {Desctription} from './Description';
-import {Header} from '@components/Header';
 import {AssignmentForm} from './AssignmentForm';
 
 import './Home.scss';

@@ -71,7 +71,7 @@ export function AssignmentForm(): JSX.Element {
 
   return (
     <Form
-      className='form-container'
+      className='form'
       layout='vertical'
       onFinish={onFinish}
       form={form}>
@@ -122,19 +122,21 @@ export function AssignmentForm(): JSX.Element {
 
       <div className='row-block'>
         <FormItem
+          className='form__count'
           label={IL.COUNT.LABEL}
           name={IL.COUNT.NAME}
           rules={[...commonRules]}>
           <InputNumber
             placeholder={IL.COUNT.PLACEHOLDER}
             addonAfter={
-              <FormItem name={IL.COUNT_TYPE.NAME}>
+              <FormItem
+                name={IL.COUNT_TYPE.NAME}
+                initialValue={OPTIONS.COUNT_TYPE[0].value}>
                 <SelectBox
                   popupMatchSelectWidth={80}
                   className={'count-select'}
                   options={OPTIONS.COUNT_TYPE}
                   placeholder={IL.COUNT_TYPE.PLACEHOLDER}
-                  defaultValue={OPTIONS.COUNT_TYPE[0].value}
                   defaultOpen
                 />
               </FormItem>

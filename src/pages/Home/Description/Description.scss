@@ -1,13 +1,15 @@
 @import '../../../styles/_allModules';
 
-.home-description {
+.home-tagline {
   flex: 1 1 auto;
   color: #18181b;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1.12rem;
-  & > :first-child {
+  overflow-wrap: break-word;
+  hyphens: auto;
+  &__title {
     font-size: 3.625rem;
     font-style: normal;
     font-weight: 800;
@@ -17,9 +19,9 @@
       color: $color-primary-button;
     }
   }
-  & > :nth-child(2) {
-    color: #52525b;
-    font-size: 1rem;
+  &__desc {
+    color: #34343a;
+    font-size: 1.5rem;
     font-style: normal;
     font-weight: 400;
     line-height: 1.625rem;

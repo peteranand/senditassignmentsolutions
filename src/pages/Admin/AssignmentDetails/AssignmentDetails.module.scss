@@ -1,0 +1,22 @@
+.list {
+  &__item {
+    align-items: flex-start !important;
+    height: fit-content;
+    &_label {
+      font-weight: 600;
+      margin-right: 1rem;
+      font-size: 0.8125rem;
+    }
+    &_content {
+      font-size: 0.75rem;
+      max-height: 8rem;
+      font-weight: 400;
+      overflow-y: auto;
+      margin-bottom: 0 !important;
+    }
+    .emptyContent {
+      color: rgb(92, 92, 92);
+      align-self: center;
+    }
+  }
+}

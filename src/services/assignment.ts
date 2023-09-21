@@ -13,7 +13,7 @@ const COLLECTION = {
 };
 
 export async function addAssignment(
-  data: Omit<AssignmentData, 'createdAt' | 'documents'>,
+  data: Omit<AssignmentData, 'created_at' | 'updated_at' | 'documents'>,
   documents: UploadFileType[]
 ): Promise<string | undefined> {
   try {

@@ -14,7 +14,7 @@ export const SELECT_INPUT_OPTIONS = {
   ],
 };
 
-export const INPUT_LITERALS = {
+export const INPUT_LITERALS: Record<string, Record<string, string>> = {
   NAME: {
     LABEL: 'Name',
     NAME: 'name',

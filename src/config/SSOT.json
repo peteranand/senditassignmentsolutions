@@ -1,0 +1,79 @@
+{
+  "ID": {
+    "key": "jobId",
+    "label": "jobId",
+    "type": "string"
+  },
+  "NAME": {
+    "key": "name",
+    "label": "Name",
+    "type": "string"
+  },
+  "EMAIL": {
+    "key": "email",
+    "label": "Email",
+    "type": "string"
+  },
+  "PHONE_NUMBER": {
+    "key": "phoneNumber",
+    "label": "Phone Number",
+    "type": "string"
+  },
+  "SUBJECT": {
+    "key": "subject",
+    "label": "Subject",
+    "type": "string"
+  },
+  "DESCRIPTION": {
+    "key": "description",
+    "label": "Description",
+    "type": "string"
+  },
+  "DOCUMENTS": {
+    "key": "documents",
+    "label": "Documents",
+    "type": "File[]"
+  },
+  "DEADLINE": {
+    "key": "deadline",
+    "label": "Deadline",
+    "type": "string"
+  },
+  "CONTENT_LIMIT": {
+    "key": "contentLimit",
+    "label": "Content Limit",
+    "type": "string"
+  },
+  "CREATED_AT": {
+    "key": "created_at",
+    "label": "Created At",
+    "type": "Date"
+  },
+  "UPDATED_AT": {
+    "key": "updated_at",
+    "label": "Created At",
+    "type": "Date"
+  },
+  "STATUS": {
+    "key": "status",
+    "name": "Assignment Status",
+    "type": "'created'|'rejected'|'accepted'|'due'|'overdue'|'review'|'done'"
+  },
+  "CUSTOMER_PAYMENT_STATUS": {
+    "key": "customerPS",
+    "name": "Customer Payment Status",
+    "type": "boolean"
+  },
+  "ASSIGNED": {
+    "key": "assigned",
+    "name": "Assigned To",
+    "type": "undefiend | 'string'"
+  },
+  "EMPLOYEE_PAYMENT_STATUS": {
+    "key": "employeePS",
+    "name": "Employee Payment Status",
+    "type": "boolean"
+  },
+  "NEW": "Payment amount, payment timestamp, ",
+  "TOADD": "Show edit and other extra details on a seperate window on click more; click done to save changes"
+}

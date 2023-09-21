@@ -42,4 +42,12 @@ export interface AssignmentData {
    * unique job Id for each job
    */
   jobId: string;
+  /**
+   * created timestamp
+   */
+  created_at: Timestamp;
+  /**
+   * updated timestamp
+   */
+  updated_at: Timestamp;
 }

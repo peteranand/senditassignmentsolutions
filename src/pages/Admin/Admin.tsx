@@ -1,41 +1,65 @@
 import React from 'react';
 import {getAllAssignments} from '@services/assignment';
 import {AssignmentData} from '@Types/asssignments';
-
 import {Table} from '@components/Table';
-import type {ColumnProps, ColumnType, ColumnsType} from '@components/Table';
+import type {ColumnsType} from '@components/Table';
 import {INPUT_LITERALS as L} from '../Home/AssignmentForm/AssignmentForm.constants';
-import {Timestamp} from 'firebase/firestore';
+import {Drawer} from '@components/Drawer';
+import {AssignmentDetails} from './AssignmentDetails';
+import {getWriters} from '@services/admin';
+import {useSearchParams} from 'react-router-dom';
 
 import './Admin.scss';
-import {Drawer} from '@components/Drawer';
-import {AssignmentDescription} from './AssignmentDescription';
-import {AssignmentDetails} from './AssignmentDetails';
+import {URL_PARAM_KEY} from './Admin.constants';
 
 export function Admin() {
   const [data, setData] = React.useState<Array<AssignmentData>>([]);
+  const [writers, setWriters] = React.useState<Array<Record<string, string>>>(
+    []
+  );
   const [loading, setLoading] = React.useState(false);
-  const [showDrawer, setShowDrawer] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState<number | undefined>();
 
-  const getUsersData = async () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const selected = searchParams.get(URL_PARAM_KEY.SELECTED);
+
+  const getAllData = async () => {
+    const getUsersData = async () => {
+      const assignments = await getAllAssignments();
+      if (assignments !== undefined) setData(assignments);
+    };
+    const getWritersData = async () => {
+      const writers = await getWriters();
+      if (writers) setWriters(writers);
+    };
+
     setLoading(true);
-
-    const assignments = await getAllAssignments();
-    console.log({assignments});
-    if (assignments !== undefined) setData(assignments);
-
+    const promises = [getUsersData(), getWritersData()];
+    await Promise.all(promises);
     setLoading(false);
   };
 
   React.useEffect(() => {
-    getUsersData();
+    getAllData();
   }, []);
 
-  const toggleDrawerShow = () => setShowDrawer((prev) => !prev);
+  React.useEffect(() => {
+    const setInitialActiveIndex = () => {
+      const activeIndex = data.findIndex(({jobId}) => jobId === selected);
+      if (activeIndex >= 0) {
+        setActiveIndex(activeIndex);
+      }
+      return -1;
+    };
+    if (data.length > 0) setInitialActiveIndex();
+  }, [data]);
+
   const onClickViewMore = (selectedIndex: number) => (e: React.MouseEvent) => {
     setActiveIndex(selectedIndex);
-    toggleDrawerShow();
+    const jobId = data[selectedIndex].jobId;
+    searchParams.set(URL_PARAM_KEY.SELECTED, jobId);
+    setSearchParams(searchParams);
   };
 
   const columnsGet = (): ColumnsType<any> => {
@@ -50,7 +74,6 @@ export function Admin() {
       key: 'viewMore',
       dataIndex: 'viewMore',
       render(value, record, index) {
-        console.log(value, index);
         return <a onClick={onClickViewMore(index)}>View More</a>;
       },
     });
@@ -64,6 +87,17 @@ export function Admin() {
     }));
   };
 
+  const getWriterOptions = () =>
+    writers.map(({name, id}) => ({label: name, value: id}));
+
+  const onCloseDrawer = () => {
+    searchParams.delete(URL_PARAM_KEY.SELECTED);
+    setSearchParams(searchParams);
+    setActiveIndex(undefined);
+  };
+  const showDrawer =
+    activeIndex !== undefined && activeIndex >= 0 ? true : false;
+
   return (
     <div className='admin'>
       <h2 className='admin__title'>Details</h2>
@@ -73,9 +107,12 @@ export function Admin() {
         dataSource={getDataSource()}
         scroll={{x: true}}
       />
-      <Drawer open={showDrawer} onClose={toggleDrawerShow}>
+      <Drawer open={showDrawer} onClose={onCloseDrawer}>
         {activeIndex !== undefined ? (
-          <AssignmentDetails {...data[activeIndex]} />
+          <AssignmentDetails
+            {...data[activeIndex]}
+            writers={getWriterOptions()}
+          />
         ) : (
           <></>
         )}

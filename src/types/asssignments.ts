@@ -50,4 +50,24 @@ export interface AssignmentData {
    * updated timestamp
    */
   updated_at: Timestamp;
+  /**
+   * document id
+   */
+  id?: string;
+  /**
+   * actions performed by admin
+   */
+  actions?: Record<string, string>[];
+  /**
+   * payable bill amount
+   */
+  payableAmount?: string;
+  /**
+   * writer ID the assignment task is assigned to
+   */
+  assignedTo?: string;
+  /**
+   * writer ID the assignment review is assigned to
+   */
+  reviewer?: string;
 }

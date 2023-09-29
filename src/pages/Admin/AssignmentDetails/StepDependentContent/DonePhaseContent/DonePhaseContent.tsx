@@ -1,9 +1,12 @@
 import {Button} from '@components/Button';
 
-export function DonePhaseContent() {
+interface Props {
+  onDone: (arg: any) => void;
+}
+export function DonePhaseContent(props: Props) {
   return (
     <div>
-      <Button>Mark as Done</Button>
+      <Button onClick={props.onDone}>Mark as Done</Button>
     </div>
   );
 }

@@ -54,7 +54,6 @@ export async function getAllAssignments(): Promise<
   }
 }
 
-/**TODO */
 export async function uploadDocuments(
   files: Array<UploadFileType>,
   jobId: string

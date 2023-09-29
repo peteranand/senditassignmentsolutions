@@ -1,10 +1,16 @@
-import {STATUS_TYPES} from '../AssignmentDetails.interface';
+import {AssignmentProps, STATUS_TYPES} from '../AssignmentDetails.interface';
 
 export interface StepDependentContentProps {
   /**
    * active status value
    */
   active: STATUS_TYPES;
-  onStepSuccess: () => void;
-  onStepFail: () => void;
+  /**
+   * list of writers
+   */
+  writers: AssignmentProps['writers'];
+  /**
+   * unique id
+   */
+  id: string;
 }

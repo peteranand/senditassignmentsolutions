@@ -8,6 +8,9 @@ import {
   limit,
   Timestamp,
   orderBy,
+  updateDoc,
+  doc,
+  getDoc,
 } from 'firebase/firestore';
 import {
   DOCUMENTS_DEFAULT_PATH as PATH,
@@ -44,7 +47,7 @@ export async function getUploadedFileURLs(
 
 export async function addDocument(
   collectionName: string,
-  data: Record<string, string | string[]>
+  data: Record<string, any>
 ) {
   try {
     const collectionRef = collection(fireStore, collectionName);
@@ -73,7 +76,40 @@ export async function getAllDocuments(
       limit(queries.limit as number)
     );
     const response = await getDocs(q);
-    const data = response.docs.map((doc) => ({...doc.data()}));
+    const data = response.docs.map((doc) => ({...doc.data(), id: doc.id}));
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function updateDocument(
+  collectionName: string,
+  id: string,
+  data: Record<string, any>
+) {
+  try {
+    const collectionRef = collection(fireStore, collectionName);
+    const docRef = doc(collectionRef, id);
+    const timestamp = Timestamp.now();
+    const payload = {
+      ...data,
+      [K.UPDATED_TIMESTAMP]: timestamp,
+    };
+    const response = await updateDoc(docRef, payload);
+    return true;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function getDocument(collectionName: string, id: string) {
+  try {
+    const collectionRef = collection(fireStore, collectionName);
+    const docRf = doc(collectionRef, id);
+    const response = await getDoc(docRf);
+    console.log({response});
+    const data = {...response.data()};
     return data;
   } catch (e) {
     console.error(e);

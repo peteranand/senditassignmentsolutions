@@ -1,0 +1,19 @@
+.processing {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  &__buttonBlk {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    button {
+      padding: 12px;
+    }
+    &_accept {
+      background-color: green;
+    }
+    &_reject {
+      background-color: red;
+    }
+  }
+}

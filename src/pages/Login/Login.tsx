@@ -10,6 +10,8 @@ import {
 } from './Login.constants';
 
 import './Login.scss';
+import React from 'react';
+import {getWriters} from '@services/admin';
 
 export function Login() {
   const navigate = useNavigate();
@@ -19,6 +21,10 @@ export function Login() {
     if (success) navigate(ROUTES.ADMIN);
     else window.alert('Comming soon');
   };
+
+  React.useEffect(() => {
+    getWriters();
+  }, []);
 
   return (
     <div className='login-wrapper'>

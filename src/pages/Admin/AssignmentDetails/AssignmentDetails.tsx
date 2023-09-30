@@ -130,12 +130,3 @@ function DateItem(props: DateItemProps) {
     </List.Item>
   );
 }
-
-// interface WriterItemProps {
-//   label: string;
-//   key: string,
-//   options: Record<'label', value>
-// }
-// function WriterItem() {
-
-// }

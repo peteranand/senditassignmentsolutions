@@ -8,9 +8,11 @@ import {Drawer} from '@components/Drawer';
 import {AssignmentDetails} from './AssignmentDetails';
 import {getWriters} from '@services/admin';
 import {useSearchParams} from 'react-router-dom';
+import {URL_PARAM_KEY} from './Admin.constants';
+import {STEPS} from './AssignmentDetails/AssignmentDetails.constants';
+import {Tag} from 'antd';
 
 import './Admin.scss';
-import {URL_PARAM_KEY} from './Admin.constants';
 
 export function Admin() {
   const [data, setData] = React.useState<Array<AssignmentData>>([]);
@@ -70,6 +72,63 @@ export function Admin() {
       dataIndex: L[key].NAME,
     }));
     columns.push({
+      title: 'Active Phase',
+      key: 'activephase',
+      dataIndex: 'status',
+    });
+    columns.push({
+      title: 'Assigned To',
+      key: 'assignedTo',
+      dataIndex: 'assignedTo',
+      render(value, record, index) {
+        if (value) {
+          const writer = writers.find(({id}) => id === value)?.name;
+          return <span>{writer}</span>;
+        }
+        // return (
+        //   <span dangerouslySetInnerHTML={{__html: '<i>Not Assigned</i>'}} />
+        // );
+        return <span>-</span>;
+      },
+    });
+    columns.push({
+      title: 'Reviwer',
+      key: 'reviewer',
+      dataIndex: 'reviewer',
+      render(value, record, index) {
+        if (value) {
+          const reviewer = writers.find(({id}) => id === value)?.name;
+          return <span>{reviewer}</span>;
+        }
+        return (
+          <span dangerouslySetInnerHTML={{__html: '<i>Not Assigned</i>'}} />
+        );
+        // return <span>-</span>;
+      },
+    });
+    columns.push({
+      title: 'Status',
+      key: 'status',
+      dataIndex: L.DEADLINE.NAME,
+      render(value, record, index) {
+        if (record.isDone) return <Tag color='success'>Completed</Tag>;
+        if (record.isAccepted === undefined) return <Tag color='lime'>New</Tag>;
+        let response = [];
+        const deadline = new Date(value);
+        const currentDate = new Date();
+        console.log({deadline, currentDate});
+        if (deadline > currentDate)
+          response.push(<Tag color='processing'>On Time</Tag>);
+        if (deadline < currentDate)
+          response.push(<Tag color='warning'>Overdue</Tag>);
+        console.log({record});
+        if (!record.isPaid) response.push(<Tag color='error'>Unpaid</Tag>);
+        else response.push(<Tag color='green'>Paid</Tag>);
+
+        return response;
+      },
+    });
+    columns.push({
       title: '',
       key: 'viewMore',
       dataIndex: 'viewMore',
@@ -81,9 +140,20 @@ export function Admin() {
   };
 
   const getDataSource = () => {
+    const getActiveStatus = (data: AssignmentData) => {
+      if (data.actions === undefined) return STEPS[1].title;
+      const lastActionValue = data.actions[data.actions?.length - 1].state;
+      if (lastActionValue === STEPS[STEPS.length - 1].value)
+        return 'Completed?';
+      const lastActionStepIndex = STEPS.findIndex(
+        ({value}) => value === lastActionValue
+      );
+      return STEPS[lastActionStepIndex + 1].title;
+    };
     return data.map((dataItems: AssignmentData) => ({
       ...dataItems,
       key: dataItems.jobId,
+      status: getActiveStatus(dataItems),
     }));
   };
 
@@ -108,13 +178,11 @@ export function Admin() {
         scroll={{x: true}}
       />
       <Drawer open={showDrawer} onClose={onCloseDrawer}>
-        {activeIndex !== undefined ? (
+        {activeIndex !== undefined && (
           <AssignmentDetails
             {...data[activeIndex]}
             writers={getWriterOptions()}
           />
-        ) : (
-          <></>
         )}
       </Drawer>
     </div>

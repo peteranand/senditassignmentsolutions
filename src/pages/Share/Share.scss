@@ -1,0 +1,41 @@
+@import '../../styles/_allModules';
+
+.share {
+  &_list {
+    &__item {
+      justify-content: flex-start !important;
+      align-items: flex-start !important;
+      height: fit-content;
+      & > :first-child {
+        font-weight: 600;
+        margin-right: 1rem;
+        font-size: 1rem;
+        &::after {
+          content: ':';
+        }
+      }
+      & > :nth-child(2) {
+        font-size: 1rem;
+        max-height: 8rem;
+        font-weight: 400;
+        overflow-y: auto;
+        margin-bottom: 0 !important;
+      }
+      .emptyContent {
+        color: rgb(92, 92, 92);
+        align-self: center;
+      }
+    }
+  }
+}
+@include desktop-and-large-desktop {
+  .share {
+    padding-inline: 4rem;
+  }
+}
+
+@include mobile-and-tablet {
+  .share {
+    padding-inline: 1rem;
+  }
+}

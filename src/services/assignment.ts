@@ -4,6 +4,7 @@ import {AssignmentData} from '../Types/asssignments';
 import {
   addDocument,
   getAllDocuments,
+  getDocument,
   getUploadedFileURLs,
   uploadFile,
 } from './firebase';
@@ -68,6 +69,20 @@ export async function uploadDocuments(
   try {
     const response = await Promise.all(fileUploadsArray);
     return response;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function getAssignment(
+  id: string
+): Promise<AssignmentData | undefined> {
+  try {
+    const data = (await getDocument(
+      COLLECTION.ASSIGNMENT,
+      id
+    )) as AssignmentData;
+    return data;
   } catch (e) {
     console.error(e);
   }

@@ -12,10 +12,10 @@ import {Steps, Tabs} from 'antd';
 import {StepDependentContent} from './StepDependentContent';
 
 import cn from './AssignmentDetails.module.scss';
+import {CopyButton} from './CopyButton';
+import {ROUTES} from '@constants/routes.constants';
 
 export function AssignmentDetails(props: AssignmentProps) {
-  console.log({props});
-
   const getActiveStepIndex = () => {
     if (!props.actions) return 1;
     const lastAction = props.actions[props.actions.length - 1];
@@ -23,6 +23,9 @@ export function AssignmentDetails(props: AssignmentProps) {
   };
   const activeIndex = getActiveStepIndex();
   const activeStateValue: STATUS_TYPES = STEPS[activeIndex]?.value;
+  const copyUrl = `${window.location.origin}${ROUTES.SHARE.split(':')[0]}${
+    props.id
+  }`;
 
   const getStepsWithDesc = () => {
     return STEPS.map((data) => {
@@ -60,32 +63,35 @@ export function AssignmentDetails(props: AssignmentProps) {
     </>
   );
   const detailsChildren = (
-    <List className={cn.list}>
-      {DATE_FIELDS.map(({key, label}) => (
-        <DateItem
-          label={label}
-          content={props[key as keyof AssignmentProps] as Timestamp}
-        />
-      ))}
-      {TEXT_DETAILS.map(({key, label}) => (
+    <>
+      <List className={cn.list}>
+        {DATE_FIELDS.map(({key, label}) => (
+          <DateItem
+            label={label}
+            content={props[key as keyof AssignmentProps] as Timestamp}
+          />
+        ))}
+        {TEXT_DETAILS.map(({key, label}) => (
+          <TextItem
+            label={label}
+            content={props[key as keyof AssignmentProps] as string}
+          />
+        ))}
         <TextItem
-          label={label}
-          content={props[key as keyof AssignmentProps] as string}
+          label={'Assigned To'}
+          content={
+            props.writers.find(({value}) => value === props?.assignedTo)?.label
+          }
         />
-      ))}
-      <TextItem
-        label={'Assigned To'}
-        content={
-          props.writers.find(({value}) => value === props?.assignedTo)?.label
-        }
-      />
-      <TextItem
-        label={'Review Assigned to'}
-        content={
-          props.writers.find(({value}) => value === props?.reviewer)?.label
-        }
-      />
-    </List>
+        <TextItem
+          label={'Review Assigned to'}
+          content={
+            props.writers.find(({value}) => value === props?.reviewer)?.label
+          }
+        />
+      </List>
+      <CopyButton copyUrl={copyUrl} />
+    </>
   );
 
   const items = [

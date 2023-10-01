@@ -5,6 +5,8 @@ import {Admin} from '../pages/Admin/Admin';
 import {Home} from '../pages/Home';
 import {Login} from '../pages/Login';
 import {ProtectedRoute} from './ProtectedRoute';
+import {Share} from '../pages/Share';
+import {Page404} from '../pages/Exceptions';
 
 function AppRoutes(): ReactElement {
   return (
@@ -19,6 +21,12 @@ function AppRoutes(): ReactElement {
             <Admin />
           </ProtectedRoute>
         }
+      />
+      <Route path={ROUTES.SHARE} element={<Share />} />
+      <Route path={ROUTES.NOT_FOUND} element={<Page404 />} />
+      <Route
+        path={ROUTES.WILD_CARD}
+        element={<Navigate to={ROUTES.NOT_FOUND} />}
       />
     </Routes>
   );

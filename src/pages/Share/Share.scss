@@ -27,6 +27,25 @@
       }
     }
   }
+
+  &_daysLeft {
+    font-size: 1.75rem;
+    width: 100%;
+    display: flex;
+    & > span {
+      margin-inline: auto;
+    }
+    .due {
+      b {
+        color: yellowgreen;
+      }
+    }
+    .overdue {
+      b {
+        color: red;
+      }
+    }
+  }
 }
 @include desktop-and-large-desktop {
   .share {

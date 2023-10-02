@@ -82,7 +82,8 @@ export async function getAssignment(
       COLLECTION.ASSIGNMENT,
       id
     )) as AssignmentData;
-    return data;
+    const documentUrl = await getUploadedFileURLs(data.jobId);
+    return {id, ...data, documents: documentUrl ?? []};
   } catch (e) {
     console.error(e);
   }

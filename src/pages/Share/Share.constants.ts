@@ -1,18 +1,21 @@
+import {AssignmentData} from '@Types/asssignments';
 import {INPUT_LITERALS} from '../Home/AssignmentForm/AssignmentForm.constants';
 
 export const DATA_STORAGE_KEY = 'assignment';
 
-const includeKeys = ['ACADEMIC_LEVEL', 'SUBJECT', 'DESC', 'CONTENT_LIMIT'];
-export const LIST_MAP = includeKeys.map((k) => {
-  const label = INPUT_LITERALS[k].LABEL;
-  const key = INPUT_LITERALS[k].NAME;
-  if (k === 'CONTENT_LIMIT')
-    return {
-      label: `${label} (words)`,
-      key,
-    };
-  return {
-    label,
-    key,
-  };
-});
+type DataItem = {label: string; key: keyof AssignmentData};
+export const LIST_ITEMS: DataItem[] = [
+  {label: 'Academic Level', key: 'academicLevel'},
+  {label: 'Subject', key: 'subject'},
+  {label: 'Description', key: 'description'},
+  {label: 'Content Limit (words)', key: 'contentLimit'},
+];
+export const EXTRA_LIST_ITEMS: DataItem[] = [
+  {label: 'Documents', key: 'documents'},
+];
+
+export const STORAGE_DATA_KEYS: DataItem['key'][] = [
+  ...[...LIST_ITEMS, ...EXTRA_LIST_ITEMS].map(({key}) => key),
+  'id',
+  'deadline',
+];

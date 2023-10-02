@@ -10,10 +10,10 @@ import {
 } from './AssignmentDetails.constants';
 import {Steps, Tabs} from 'antd';
 import {StepDependentContent} from './StepDependentContent';
-
-import cn from './AssignmentDetails.module.scss';
 import {CopyButton} from './CopyButton';
 import {ROUTES} from '@constants/routes.constants';
+
+import cn from './AssignmentDetails.module.scss';
 
 export function AssignmentDetails(props: AssignmentProps) {
   const getActiveStepIndex = () => {

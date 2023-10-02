@@ -38,3 +38,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 /**
  * Show status and other stuff in admin tables
  */
+
+
+/**
+ * Seperate cards right beside details for vieweing writer info and add writes etc
+ * 
+ * Task in progress phase - show who is working, days left till deadline
+ * 
+ * expose route to client to get info about his order, pay now button (?)
+ * 
+ */

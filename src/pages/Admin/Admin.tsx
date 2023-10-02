@@ -72,11 +72,6 @@ export function Admin() {
       dataIndex: L[key].NAME,
     }));
     columns.push({
-      title: 'Active Phase',
-      key: 'activephase',
-      dataIndex: 'status',
-    });
-    columns.push({
       title: 'Assigned To',
       key: 'assignedTo',
       dataIndex: 'assignedTo',
@@ -107,6 +102,11 @@ export function Admin() {
       },
     });
     columns.push({
+      title: 'Active Phase',
+      key: 'activephase',
+      dataIndex: 'status',
+    });
+    columns.push({
       title: 'Status',
       key: 'status',
       dataIndex: L.DEADLINE.NAME,
@@ -116,12 +116,10 @@ export function Admin() {
         let response = [];
         const deadline = new Date(value);
         const currentDate = new Date();
-        console.log({deadline, currentDate});
         if (deadline > currentDate)
           response.push(<Tag color='processing'>On Time</Tag>);
         if (deadline < currentDate)
           response.push(<Tag color='warning'>Overdue</Tag>);
-        console.log({record});
         if (!record.isPaid) response.push(<Tag color='error'>Unpaid</Tag>);
         else response.push(<Tag color='green'>Paid</Tag>);
 

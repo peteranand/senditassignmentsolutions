@@ -29,22 +29,32 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
  */
 
 /**
- * **New
- * Fields to add
- *  - Word Count/ Page Count
- *  - Deadline
- */
-
-/**
- * Show status and other stuff in admin tables
- */
-
 
 /**
  * Seperate cards right beside details for vieweing writer info and add writes etc
- * 
+ *
  * Task in progress phase - show who is working, days left till deadline
- * 
+ *
  * expose route to client to get info about his order, pay now button (?)
+ *
+ * new tab to open details of job during processing phase
+ *
+ * show notification or status based on job deadline nearing end
  * 
+ * renmae phase done to delivered
+ * 
+ * remove header useless stuff
+ * 
+ * terms and conditions with tick mark to accept tearms before submitting order (user's side)
+ * 
+ * show message a message saying someone will contact you via whatsapp or email 
+ * 
+ * copy share url bug- other users cant see date count down
+ * 
+ * 
+ * support floating button - gives user a contact number; in future show common issues with soln
+ * toggle a card to the left of floating button saying "need any help" after a couple of seconds
+ * 
+ * FAQ section
+ *
  */
